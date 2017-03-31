@@ -13,7 +13,7 @@
             };
 
             factory.getAll = function() {
-                return $http.get('http://compacct.api.hybrain.co/api/v1/account-classifications');
+                return $http.get('https://compacct.api.hybrain.co/api/v1/account-classifications');
             }
 
             return factory;
