@@ -1,0 +1,341 @@
+<div class="panelReport">
+	<div class="row headerReport hidden-print">
+        <div data-ng-include="'app/common/report-header.html'"></div>
+    </div>
+
+    <div class="hidden-print"></div>
+
+	<div class="contentReport">
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4"><center>CompAcct - Accounting Solutions</center></div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4"><center><h4>Cash Flow Statement</h4></center></div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4">
+				<center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+			</div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<br><br>
+		<div class="row">
+			<div class="col-xs-12 col-md-2"></div>
+			<div class="col-xs-12 col-md-8">
+
+				<table class="table-report table-hover">
+					<tr class="table-report-tr-title-border">
+						<th></th>
+						<th class="alignRight">Total</th> 
+					</tr>
+
+					<!--**********************Beginning balance is the cash from the ending balance from the previous  month.../!-->
+					<!--Review this again -->
+					
+					<!-- Start - Insert data here for Beginning Balance -->
+					<tr class="table-report-tr-title-border cellPadding">
+						<th>1. Beginning Balance</th>
+						<th class="alignRight">0.00</th> 
+					</tr>
+					<!-- End - Insert data here for Beginning Balance -->
+
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>A. Cash Flow from Operating Activities</td>
+						<td class="alignRight"></td>
+					</tr>
+
+					<!-- Start - Insert data here for Net Income -->
+					<tr>
+						<td class="tabIndent">Net Income</td>
+						<td class="alignRight">{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) | currency : '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Net Income -->
+					
+					<!-- Start - Insert data here for Other Current Assets -->
+					<tr ng-repeat="cfOperation in cashFlowOperation">
+						<td class="tabIndent">{{cfOperation.acct_name}}</td>
+						<td class="alignRight">{{((cfOperation.entry_debit - cfOperation.entry_credit) * -1) | currency : '' : '2'}}</td>
+					</tr>
+					<!-- End - Insert data here for Other Current Assets -->
+
+					<!-- Start - Insert data here for Net cash provided by Operating Activities -->
+					<tr class="table-report-tr-title-border-top">
+						<td class="tabIndent"><b>Net cash provided by Operating Activities</b></td>
+						<td class="alignRight ">{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) + (cfOperatingSum * -1) | currency : '' : '2'}}</td>
+					</tr>
+					<!-- End - Insert data here for Net cash provided by Operating Activities -->
+
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>B. Cash Flow from Investing Activities</td>
+						<td class="alignRight"></td>
+					</tr>
+
+					<!-- Start - Insert data here for Investing Activities -->
+					<tr ng-repeat="cfInvesting in cashFlowInvesting">
+						<td class="tabIndent">{{cfInvesting.acct_name}}</td>
+						<td class="alignRight">{{((cfInvesting.entry_debit - cfInvesting.entry_credit) * -1) | currency : '' : '2'}}</td>
+					</tr>
+					<!-- End - Insert data here for Investing Activities -->
+
+					<!-- Start - Insert data here for et cash provided by Investing Activities -->
+					<tr class="table-report-tr-title-border-top">
+						<td class="tabIndent"><b>Net cash provided by Investing Activities</b></td>
+						<td class="alignRight ">{{ (cfInvestingSum * -1) | currency : '' : '2'}}</td>
+					</tr>
+					<!-- End - Insert data here for et cash provided by Investing Activities -->
+
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>C. Cash Flow from Financing Activities</td>
+						<td class="alignRight"></td>
+					</tr>
+
+					<!-- Start - Insert data here for Financing Activities-->
+					<tr ng-repeat="cfFinancing in cashFlowFinancing">
+						<td class="tabIndent">{{cfFinancing.acct_name}}</td>
+						<td class="alignRight">{{((cfFinancing.entry_debit - cfFinancing.entry_credit) * -1) | currency : '' : '2'}}</td>
+					</tr>
+					<!-- End - Insert data here for Financing Activities-->
+
+					<!-- Start - Insert data here for Net -->
+					<tr class="table-report-tr-title-border-top">
+						<td class="tabIndent"><b>Net cash provided by Financing Activities</b></td>
+						<td class="alignRight ">{{ (cfFinancingSum * -1) | currency : '' : '2'}}</td>
+					</tr>
+
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Net Change in Cash -->
+					<tr class="table-report-tr-title-border cellPadding">
+						<td><b>2. Net Change in Cash</b> (A) + (B) + (C)</td>
+						<td class="alignRight"><b>{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) + (cfOperatingSum * -1) + (cfInvestingSum * -1) + (cfFinancingSum * -1) | currency : '' : '2'}}</b></td> 
+					</tr>
+					<!-- End - Insert data here for Net Change in Cash -->
+
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Ending Cash Balance -->
+					<tr class="table-report-tr-title-border cellPadding">
+						<th>Ending Cash Balance 1-2</th>
+						<th class="alignRight">{{(((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) + (cfOperatingSum * -1) + (cfInvestingSum * -1) + (cfFinancingSum * -1) | currency : '' : '2'}}</th> 
+					</tr>
+					<!-- End - Insert data here for Ending Cash Balance -->
+					
+
+				</table>
+
+			</div>
+			<div class="col-xs-12 col-md-2"></div>
+		</div>
+
+		</div>
+
+</div>
+
+<!--Customize Report Modal-->
+<div data-ng-include="'app/common/customize-modal.html'"></div>
+
+<!--Schedule Report MOdal-->
+<div data-ng-include="'app/common/schedule-report-modal.html'"></div>
+
+
+<!--Print Modal Pop-up	-->
+<div class="modal fade hidden-print" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content-print no-border">
+            <div class="modal-header no-border">
+                <div class="col-xs-12 col-md-6">
+                    <p>Preview</p>
+                </div>
+                <div class="col-xs-12 col-md-6 " align="right">
+                    <button type="button" class="btn btn-danger btn-modal-print " onclick="myFunction()">Print</button>
+                    <button type="button" class="btn btn-secondary btn-modal-close" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="modal-body">
+				<div class="contentReport">
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4"><center>CompAcct - Accounting Solutions</center></div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4"><center><h4>Cash Flow Statement</h4></center></div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4">
+							<center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+						</div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<br><br>
+					<div class="row">
+						<div class="col-xs-12 col-md-2"></div>
+						<div class="col-xs-12 col-md-8">
+
+							<table class="table-report table-hover">
+								<tr class="table-report-tr-title-border">
+									<th></th>
+									<th class="alignRight">Total</th> 
+								</tr>
+
+								<!--**********************Beginning balance is the cash from the ending balance from the previous  month.../!-->
+								<!--Review this again -->
+								
+								<!-- Start - Insert data here for Beginning Balance -->
+								<tr class="table-report-tr-title-border cellPadding">
+									<th>1. Beginning Balance</th>
+									<th class="alignRight">0.00</th> 
+								</tr>
+								<!-- End - Insert data here for Beginning Balance -->
+
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+
+								<tr>
+									<td>A. Cash Flow from Operating Activities</td>
+									<td class="alignRight"></td>
+								</tr>
+
+								<!-- Start - Insert data here for Net Income -->
+								<tr>
+									<td class="tabIndent">Net Income</td>
+									<td class="alignRight">{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) | currency : '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Net Income -->
+								
+								<!-- Start - Insert data here for Other Current Assets -->
+								<tr ng-repeat="cfOperation in cashFlowOperation">
+									<td class="tabIndent">{{cfOperation.acct_name}}</td>
+									<td class="alignRight">{{((cfOperation.entry_debit - cfOperation.entry_credit) * -1) | currency : '' : '2'}}</td>
+								</tr>
+								<!-- End - Insert data here for Other Current Assets -->
+
+								<!-- Start - Insert data here for Net cash provided by Operating Activities -->
+								<tr class="table-report-tr-title-border-top">
+									<td class="tabIndent"><b>Net cash provided by Operating Activities</b></td>
+									<td class="alignRight ">{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) + (cfOperatingSum * -1) | currency : '' : '2'}}</td>
+								</tr>
+								<!-- End - Insert data here for Net cash provided by Operating Activities -->
+
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+
+								<tr>
+									<td>B. Cash Flow from Investing Activities</td>
+									<td class="alignRight"></td>
+								</tr>
+
+								<!-- Start - Insert data here for Investing Activities -->
+								<tr ng-repeat="cfInvesting in cashFlowInvesting">
+									<td class="tabIndent">{{cfInvesting.acct_name}}</td>
+									<td class="alignRight">{{((cfInvesting.entry_debit - cfInvesting.entry_credit) * -1) | currency : '' : '2'}}</td>
+								</tr>
+								<!-- End - Insert data here for Investing Activities -->
+
+								<!-- Start - Insert data here for et cash provided by Investing Activities -->
+								<tr class="table-report-tr-title-border-top">
+									<td class="tabIndent"><b>Net cash provided by Investing Activities</b></td>
+									<td class="alignRight ">{{ (cfInvestingSum * -1) | currency : '' : '2'}}</td>
+								</tr>
+								<!-- End - Insert data here for et cash provided by Investing Activities -->
+
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+
+								<tr>
+									<td>C. Cash Flow from Financing Activities</td>
+									<td class="alignRight"></td>
+								</tr>
+
+								<!-- Start - Insert data here for Financing Activities-->
+								<tr ng-repeat="cfFinancing in cashFlowFinancing">
+									<td class="tabIndent">{{cfFinancing.acct_name}}</td>
+									<td class="alignRight">{{((cfFinancing.entry_debit - cfFinancing.entry_credit) * -1) | currency : '' : '2'}}</td>
+								</tr>
+								<!-- End - Insert data here for Financing Activities-->
+
+								<!-- Start - Insert data here for Net -->
+								<tr class="table-report-tr-title-border-top">
+									<td class="tabIndent"><b>Net cash provided by Financing Activities</b></td>
+									<td class="alignRight ">{{ (cfFinancingSum * -1) | currency : '' : '2'}}</td>
+								</tr>
+
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Net Change in Cash -->
+								<tr class="table-report-tr-title-border cellPadding">
+									<td><b>2. Net Change in Cash</b> (A) + (B) + (C)</td>
+									<td class="alignRight"><b>{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) + (cfOperatingSum * -1) + (cfInvestingSum * -1) + (cfFinancingSum * -1) | currency : '' : '2'}}</b></td> 
+								</tr>
+								<!-- End - Insert data here for Net Change in Cash -->
+
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Ending Cash Balance -->
+								<tr class="table-report-tr-title-border cellPadding">
+									<th>Ending Cash Balance 1-2</th>
+									<th class="alignRight">{{(((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) + (cfOperatingSum * -1) + (cfInvestingSum * -1) + (cfFinancingSum * -1) | currency : '' : '2'}}</th> 
+								</tr>
+								<!-- End - Insert data here for Ending Cash Balance -->
+								
+
+							</table>
+
+						</div>
+						<div class="col-xs-12 col-md-2"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Modal -->

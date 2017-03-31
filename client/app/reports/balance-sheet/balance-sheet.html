@@ -1,0 +1,372 @@
+<div class="panelReport">
+	<div class="row headerReport hidden-print">
+        <div data-ng-include="'app/common/report-header.html'"></div>
+    </div>
+
+    <div class="hidden-print"></div>
+
+	<div class="contentReport">
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4"><center>CompAcct - Accounting Solutions</center></div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4"><center><h4>Balance Sheet</h4></center></div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4">
+				<center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+			</div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<br><br>
+		<div class="row">
+			<div class="col-xs-12 col-md-2"></div>
+			<div class="col-xs-12 col-md-8" align="left">
+				<table class="table-report table-hover">
+					<tr class="table-report-tr-title-border">
+						<th>ACOUNT</th>
+						<th class="alignRight">Total</th> 
+					</tr>
+
+					<tr>
+						<td>Current Asset</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Current Assets -->
+					<tr ng-repeat="blCurrentAssets in balanceSheetCurrentAssets">
+						<td>{{blCurrentAssets.acct_name}}</td>
+						<td class="alignRight">{{CurrentAssetsSum | currency: '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Current Assets -->
+
+					<tr>
+						<td>Cash</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Current Assets -->
+					<tr ng-repeat="blCash in balanceSheetCash">
+						<td>{{blCash.acct_name}}</td>
+						<td class="alignRight">{{CashSum | currency: '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Current Assets -->
+
+					<tr class="table-report-tr-title-border">
+						<th><b>Total Current Assets</b></th>
+						<th class="alignRight">{{ (CurrentAssetsSum + CashSum) | currency: '' : '2' }}</th> 
+					</tr>
+
+					<tr>
+						<td>Fixed Assets</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Fixed Assets -->
+					<tr ng-repeat="blFixedAssets in balanceSheetFixedAssets">
+						<td>{{blFixedAssets.acct_name}}</td>
+						<td class="alignRight">{{ (blFixedAssets.entry_debit - blFixedAssets.entry_credit) | currency: '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Fixed Assets -->
+
+					<tr class="table-report-tr-title-border">
+						<th><b>Total Fixed Assets</b></th>
+						<th class="alignRight">{{ FixedAssetsSum | currency: '' : '2' }}</th> 
+					</tr>
+
+					<!--total assets-->
+					<tr>
+						<td class="alignRight">TOTAL ASSETS</td>
+						<td class="alignRight underline">{{ ((CurrentAssetsSum + CashSum) + FixedAssetsSum) | currency: 'PHP' : '2' }}</td>
+					</tr>
+					<!--total assets-->
+
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+
+					<tr class="table-report-tr-title-border">
+						<th>Liabilities and Equities</th>
+						<th class="alignRight">Total</th> 
+					</tr>
+
+					<tr>
+						<td>Current Liabilities</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Fixed Assets -->
+					<tr ng-repeat="blCurrentLiabilites in balanceSheetCurrentLiabilities">
+						<td>{{blCurrentLiabilites.acct_name}}</td>
+						<td class="alignRight">{{blCurrentLiabilites.entry_credit | currency: '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Fixed Assets -->
+
+					<tr>
+						<td>Non Current Liabilities</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for NonCurrentLiabilites -->
+					<tr ng-repeat="blNonCurrentLiabilites in balanceSheetNonCurrentLiabilities">
+						<td>{{blNonCurrentLiabilites.acct_name}}</td>
+						<td class="alignRight">{{blNonCurrentLiabilites.entry_credit | currency: '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for NonCurrentLiabilites -->
+
+					<!--total Current Liabilities-->
+					<tr class="table-report-tr-title-border">
+						<th><b>Total Current Liabilities</b></th>
+						<th class="alignRight">{{(OtherCurrentLiabilitiesSum * -1) | currency: '' : '2' }}</th> <!-- Multiply by negative 1 to get positive amount -->
+					</tr>
+					<!--total Current Liabilities-->
+
+					<tr>
+						<td>Equities</td>
+						<td></td>
+					</tr>
+
+					<!-- Start - Insert data here for Capital -->
+					<tr ng-repeat="blEquity in balanceSheetEquity">
+						<td>{{blEquity.acct_name}}</td>
+						<td class="alignRight">{{((blEquity.entry_debit-blEquity.entry_credit) * -1) | currency: '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Capital -->
+
+					<!-- Start - Insert data here for Current Year Earnings -->
+					<tr>
+						<td>Current Year Earnings</td>
+						<td class="alignRight">{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) | currency : '' : '2' }}</td>
+					</tr>
+					<!-- End - Insert data here for Current Year Earnings -->
+
+					<!--total Current Equities-->
+					<tr class="table-report-tr-title-border">
+						<th><b>Total Equities</b></th>
+						<th class="alignRight">{{ ((EquitySum * -1) + ((incomeSum * -1) - costofgoodssoldSum - expenseSum )) - (OtherExpenseSum) | currency : '' : '2'}}</th>
+					</tr>
+					<!--total Current Equities-->
+
+					<!--TOTAL LIABILITIES & EQUITIES-->
+					<tr>
+						<td class="alignRight">TOTAL LIABILITIES & EQUITIES</td>
+						<td class="alignRight underline">{{ ((EquitySum * -1) + ((incomeSum * -1) - costofgoodssoldSum - expenseSum )) - (OtherExpenseSum) + (OtherCurrentLiabilitiesSum * -1) | currency : 'PHP' : '2'}}</td>
+					</tr>
+					<!--TOTAL LIABILITIES & EQUITIES
+						((Equity + Income) - Cost Of Goods Sold - Expense)  - Other Expense + Other Current Liabilities
+					-->
+
+				</table>
+				
+			</div>
+			<div class="col-xs-12 col-md-2"></div>
+		</div>
+
+	</div>
+
+
+</div>
+
+<!--Customize Report Modal-->
+<div data-ng-include="'app/common/customize-modal.html'"></div>
+
+<!--Schedule Report MOdal-->
+<div data-ng-include="'app/common/schedule-report-modal.html'"></div>
+
+
+<!--Print Modal Pop-up	-->
+<div class="modal fade hidden-print" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content-print no-border">
+            <div class="modal-header no-border">
+                <div class="col-xs-12 col-md-6">
+                    <p>Preview</p>
+                </div>
+                <div class="col-xs-12 col-md-6 " align="right">
+                    <button type="button" class="btn btn-danger btn-modal-print " onclick="myFunction()">Print</button>
+                    <button type="button" class="btn btn-secondary btn-modal-close" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="modal-body">
+				<div class="contentReport">
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4"><center>CompAcct - Accounting Solutions</center></div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4"><center><h4>Balance Sheet</h4></center></div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4">
+							<center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+						</div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<br><br>
+					<div class="row">
+						<div class="col-xs-12 col-md-2"></div>
+						<div class="col-xs-12 col-md-8" align="left">
+							<table class="table-report table-hover">
+								<tr class="table-report-tr-title-border">
+									<th>ACOUNT</th>
+									<th class="alignRight">Total</th> 
+								</tr>
+
+								<tr>
+									<td>Current Asset</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Current Assets -->
+								<tr ng-repeat="blCurrentAssets in balanceSheetCurrentAssets">
+									<td>{{blCurrentAssets.acct_name}}</td>
+									<td class="alignRight">{{CurrentAssetsSum | currency: '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Current Assets -->
+
+								<tr>
+									<td>Cash</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Current Assets -->
+								<tr ng-repeat="blCash in balanceSheetCash">
+									<td>{{blCash.acct_name}}</td>
+									<td class="alignRight">{{CashSum | currency: '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Current Assets -->
+
+								<tr class="table-report-tr-title-border">
+									<th><b>Total Current Assets</b></th>
+									<th class="alignRight">{{ (CurrentAssetsSum + CashSum) | currency: '' : '2' }}</th> 
+								</tr>
+
+								<tr>
+									<td>Fixed Assets</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Fixed Assets -->
+								<tr ng-repeat="blFixedAssets in balanceSheetFixedAssets">
+									<td>{{blFixedAssets.acct_name}}</td>
+									<td class="alignRight">{{ (blFixedAssets.entry_debit - blFixedAssets.entry_credit) | currency: '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Fixed Assets -->
+
+								<tr class="table-report-tr-title-border">
+									<th><b>Total Fixed Assets</b></th>
+									<th class="alignRight">{{ FixedAssetsSum | currency: '' : '2' }}</th> 
+								</tr>
+
+								<!--total assets-->
+								<tr>
+									<td class="alignRight">TOTAL ASSETS</td>
+									<td class="alignRight underline">{{ ((CurrentAssetsSum + CashSum) + FixedAssetsSum) | currency: 'PHP' : '2' }}</td>
+								</tr>
+								<!--total assets-->
+
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+
+								<tr class="table-report-tr-title-border">
+									<th>Liabilities and Equities</th>
+									<th class="alignRight">Total</th> 
+								</tr>
+
+								<tr>
+									<td>Current Liabilities</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Fixed Assets -->
+								<tr ng-repeat="blCurrentLiabilites in balanceSheetCurrentLiabilities">
+									<td>{{blCurrentLiabilites.acct_name}}</td>
+									<td class="alignRight">{{blCurrentLiabilites.entry_credit | currency: '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Fixed Assets -->
+
+								<tr>
+									<td>Non Current Liabilities</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for NonCurrentLiabilites -->
+								<tr ng-repeat="blNonCurrentLiabilites in balanceSheetNonCurrentLiabilities">
+									<td>{{blNonCurrentLiabilites.acct_name}}</td>
+									<td class="alignRight">{{blNonCurrentLiabilites.entry_credit | currency: '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for NonCurrentLiabilites -->
+
+								<!--total Current Liabilities-->
+								<tr class="table-report-tr-title-border">
+									<th><b>Total Current Liabilities</b></th>
+									<th class="alignRight">{{(OtherCurrentLiabilitiesSum * -1) | currency: '' : '2' }}</th> <!-- Multiply by negative 1 to get positive amount -->
+								</tr>
+								<!--total Current Liabilities-->
+
+								<tr>
+									<td>Equities</td>
+									<td></td>
+								</tr>
+
+								<!-- Start - Insert data here for Capital -->
+								<tr ng-repeat="blEquity in balanceSheetEquity">
+									<td>{{blEquity.acct_name}}</td>
+									<td class="alignRight">{{((blEquity.entry_debit-blEquity.entry_credit) * -1) | currency: '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Capital -->
+
+								<!-- Start - Insert data here for Current Year Earnings -->
+								<tr>
+									<td>Current Year Earnings</td>
+									<td class="alignRight">{{ (((incomeSum * -1) - costofgoodssoldSum - expenseSum ))- (OtherExpenseSum) | currency : '' : '2' }}</td>
+								</tr>
+								<!-- End - Insert data here for Current Year Earnings -->
+
+								<!--total Current Equities-->
+								<tr class="table-report-tr-title-border">
+									<th><b>Total Equities</b></th>
+									<th class="alignRight">{{ ((EquitySum * -1) + ((incomeSum * -1) - costofgoodssoldSum - expenseSum )) - (OtherExpenseSum) | currency : '' : '2'}}</th>
+								</tr>
+								<!--total Current Equities-->
+
+								<!--TOTAL LIABILITIES & EQUITIES-->
+								<tr>
+									<td class="alignRight">TOTAL LIABILITIES & EQUITIES</td>
+									<td class="alignRight underline">{{ ((EquitySum * -1) + ((incomeSum * -1) - costofgoodssoldSum - expenseSum )) - (OtherExpenseSum) + (OtherCurrentLiabilitiesSum * -1) | currency : 'PHP' : '2'}}</td>
+								</tr>
+								<!--TOTAL LIABILITIES & EQUITIES
+									((Equity + Income) - Cost Of Goods Sold - Expense)  - Other Expense + Other Current Liabilities
+								-->
+
+							</table>
+							
+						</div>
+						<div class="col-xs-12 col-md-2"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Modal -->

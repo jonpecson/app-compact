@@ -1,0 +1,261 @@
+<div class="brand">
+
+    <!-- toggle small sidebar menu -->
+    <!--<a href="javascript:;" class="toggle-apps hidden-xs" ng-click="toggle.quickLaunch = !toggle.quickLaunch">
+        <i class="icon-grid"></i>
+    </a>-->
+    <!-- /toggle small sidebar menu -->
+
+    <!-- toggle offscreen menu -->
+    <!--<div class="toggle-offscreen">
+        <offscreen class="visible-xs"></offscreen>
+    </div>-->
+    <!-- /toggle offscreen menu -->
+
+    <!-- logo -->
+    <a class="brand-logo">
+        <span>COMPACCT</span>
+    </a>
+    <a href="#" class="small-menu-visible brand-logo">R</a>
+    <!-- /logo -->
+
+</div>
+
+<!--<div ng-if="toggle.quickLaunch">
+    <ul class="quick-launch-apps">
+        <li>
+            <a ui-sref="app.apps.gallery" ng-click="toggle.quickLaunch = !toggle.quickLaunch">
+                <span class="app-icon bg-danger text-white">
+          G
+        </span>
+                <span class="app-title" translate="menu.GALLERY"></span>
+            </a>
+        </li>
+        <li>
+            <a ui-sref="app.apps.messages" ng-click="toggle.quickLaunch = !toggle.quickLaunch">
+                <span class="app-icon bg-success text-white">
+          M
+        </span>
+                <span class="app-title" translate="menu.MESSAGES"></span>
+            </a>
+        </li>
+        <li>
+            <a ui-sref="app.apps.social" ng-click="toggle.quickLaunch = !toggle.quickLaunch">
+                <span class="app-icon bg-primary text-white">
+          S
+        </span>
+                <span class="app-title" translate="menu.SOCIAL"></span>
+            </a>
+        </li>
+        <li>
+            <a ui-sref="app.apps.travel" ng-click="toggle.quickLaunch = !toggle.quickLaunch">
+                <span class="app-icon bg-info text-white">
+          T
+        </span>
+                <span class="app-title" translate="menu.TRAVEL"></span>
+            </a>
+        </li>
+    </ul>
+</div>-->
+
+<!-- main navigation -->
+<nav role="navigation" side-navigation ng-if="!toggle.quickLaunch">
+
+    <ul class="nav">
+
+        <!-- dashboard -->
+        <li ui-sref-active="active">
+            <a href="#/">
+                <i class="icon-compass"></i>
+                <span translate="menu.DASHBOARD"></span>
+            </a>
+        </li>
+        <!-- /dashboard -->
+
+        <!-- customizer -->
+        <li ui-sref-active="active">
+            <a ui-sref="app.contacts.all">
+                <i class="icon-user"></i>
+                <span>Contacts</span>
+            </a>
+        </li>
+        <!-- /customizer -->
+
+        <!-- items -->
+        <!--data-ng-class="{open: $state.includes('app.cards')}"-->
+        <li>
+            <a href="javascript:;">
+                <!--<span class="badge pull-right">3</span>-->
+                <i class="icon-handbag"></i>
+                <span>Items</span>
+            </a>
+            <ul class="sub-menu">
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.basic">
+                        <span>Items</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.portlets">
+                        <span>Price Lists</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.draggable">
+                        <span>Item Adjustments</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- /items -->
+
+        <br>
+
+        <!-- sales -->
+        <!--data-ng-class="{open: $state.includes('app.cards')}"-->
+        <li>
+            <a href="javascript:;">
+                <!--<span class="badge pull-right">3</span>-->
+                <i class="icon-basket"></i>
+                <span>Sales</span>
+            </a>
+            <ul class="sub-menu">
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.basic">
+                        <span>Estimates</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.portlets">
+                        <span>Retainer Invoices</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.draggable">
+                        <span>Sales Orders</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Invoices</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Payments Received</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Recurring Invoices</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Credit Notes</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- /sales -->
+
+        <!-- purchaces -->
+        <!--data-ng-class="{open: $state.includes('app.cards')}"-->
+        <li>
+            <a href="javascript:;">
+                <!--<span class="badge pull-right">3</span>-->
+                <i class="icon-bag"></i>
+                <span>Purchaces</span>
+            </a>
+            <ul class="sub-menu">
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.basic">
+                        <span>Expenses</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.portlets">
+                        <span>Recurring Expenses</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.draggable">
+                        <span>Purchase Orders</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Bills</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Payments Made</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Recurring Bills</span>
+                    </a>
+                </li>
+
+                <li ui-sref-active="active">
+                    <a ui-sref="app.cards.widgets">
+                        <span>Vendor Credits</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- /purchaces -->
+
+        <br>
+        <!-- accountant -->
+        <!--data-ng-class="{open: $state.includes('app.cards')}"-->
+        <li>
+            <a href="javascript:;">
+                <!--<span class="badge pull-right">3</span>-->
+                <i class="icon-bag"></i>
+                <span>Accountant</span>
+            </a>
+            <ul class="sub-menu">
+                <li ui-sref-active="active">
+                    <a ui-sref="app.journals.all">
+                        <span>Manual Journals</span>
+                    </a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="app.chartofaccounts.all">
+                        <span>Chart of Accounts</span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="app.journals.addVoucher">
+                        <span>Add Voucher</span>
+                    </a>
+
+                </li>
+
+            </ul>
+        </li>
+        <!-- /accountant -->
+
+        <!-- purchaces -->
+        <!--data-ng-class="{open: $state.includes('app.cards')}"-->
+
+        <!-- reports -->
+        <li ui-sref-active="active">
+            <a href="#/reports/report">
+                <i class="icon-graph"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+        <!-- /reports -->
+
+    </ul>
+</nav>
+<!-- /main navigation -->

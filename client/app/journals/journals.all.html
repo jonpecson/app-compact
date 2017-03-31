@@ -1,0 +1,51 @@
+<div class="page-title">
+    <div class="title">Journals</div>
+    <div class="sub-title">All Journals</div>
+</div>
+
+<div class="card bg-white m-b">
+    <div class="card-header">Journals Table
+        <!--<button type="button" class="btn pull-right" >
+            <i class="glyphicon  glyphicon-list-alt"></i> New Journal</button>
+            -->
+        <a ui-sref="app.journals.add" class="btn pull-right btn-primary btn-md btn-icon">
+            <i class="icon-plus"></i>
+            <span>New Journal</span>
+        </a>
+    </div>
+    <div class="card-block p-a-0">
+        <div class="table-responsive">
+            <table class="table m-b-0">
+                <thead>
+                    <tr>
+                        <th class="col-md-1"><b>Date</b></th>
+                        <th class="col-md-1"><b>JOURNAL#</b></th>
+                        <th class="col-md-2"><b>REFERENCE#</b></th>
+                        <th class="col-md-2"><b>AMOUNT</b></th>
+                        <th class="col-md-1"><b>NOTES</b></th>
+                        <!--<th class="col-md-1">Gender</th>
+                        <th class="col-md-1">Action</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="journal in vm.journals | orderBy : '-journ_id'">
+                        <td>
+                            <span>{{journal.journ_date | date:'short'}}</span></td>
+
+                        <td>{{journal.journ_id}}</td>
+                        <td>{{journal.journ_reference_number}}</td>
+                        <td class="align-left">
+                            {{journal.journ_total_amount | currency : 'P': '2' }}
+                        </td>
+                        <td>
+                            <i class="glyphicon  glyphicon-list-alt"></i>
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

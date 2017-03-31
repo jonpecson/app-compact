@@ -1,0 +1,163 @@
+<div class="panelReport ">
+    <div class="row headerReport hidden-print">
+        <div data-ng-include="'app/common/report-header.html'"></div>
+    </div>
+
+    <div class="hidden-print"></div>
+
+    <div class="contentReport">
+        <!-- Start - Insert data here for company name -->
+        <div class="row">
+            <div class="col-xs-12 col-md-4"></div>
+            <div class="col-xs-12 col-md-4">
+                <center>CompAcct - Accounting Solutions</center>
+            </div>
+            <div class="col-xs-12 col-md-4"></div>
+        </div>
+        <!-- End - Insert data here for company name -->
+
+        <div class="row">
+            <div class="col-xs-12 col-md-4"></div>
+            <div class="col-xs-12 col-md-4">
+                <center>
+                    <h4>General Ledger</h4>
+                </center>
+            </div>
+            <div class="col-xs-12 col-md-4"></div>
+        </div>
+
+        <!-- Start - Insert data here for date covered -->
+        <div class="row">
+            <div class="col-xs-12 col-md-4"></div>
+            <div class="col-xs-12 col-md-4">
+                <center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+            </div>
+            <div class="col-xs-12 col-md-4"></div>
+        </div>
+        <!-- End - Insert data here for date covered -->
+
+        <br><br>
+        <div class="row">
+            <div class="col-xs-12 col-md-2"></div>
+            <div class="col-xs-12 col-md-8">
+                <table class="table-report table-hover">
+                    <tr class="table-report-tr-title-border">
+                        <th>ACOUNT</th>
+                        <th class="alignRight">DEBIT</th>
+                        <th class="alignRight">CREDIT</th>
+                        <th class="alignRight">BALANCE</th>
+                    </tr>
+
+                    <tr ng-repeat="journal in journals">
+                        <td>
+                            {{journal.acct_name}}
+                        </td>
+                        <td class="alignRight">{{journal.entry_debit | currency : '' : '2'}}</td>
+                        <td class="alignRight">{{journal.entry_credit | currency : '' : '2'}}</td>
+                        <td class="alignRight">{{getBalance(journal.entry_debit, journal.entry_credit)}}</td>
+
+                    </tr>
+
+
+                </table>
+
+                <!--<p>{{aggregatedObject | json}}</p>-->
+            </div>
+            <div class="col-xs-12 col-md-2"></div>
+        </div>
+    </div>
+</div>
+
+<!--Header-Modals-->
+
+<!--Customize Report Modal-->
+<div data-ng-include="'app/common/customize-modal.html'"></div>
+
+<!--Schedule Report MOdal-->
+<div data-ng-include="'app/common/schedule-report-modal.html'"></div>
+
+
+<!--Print Modal Pop-up	-->
+<div class="modal fade hidden-print" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content-print no-border">
+            <div class="modal-header no-border">
+                <div class="col-xs-12 col-md-6">
+                    <p>Preview</p>
+                </div>
+                <div class="col-xs-12 col-md-6 " align="right">
+                    <button type="button" class="btn btn-danger btn-modal-print " onclick="myFunction()">Print</button>
+                    <button type="button" class="btn btn-secondary btn-modal-close" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="contentReport">
+                    <!-- Start - Insert data here for company name -->
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4"></div>
+                        <div class="col-xs-12 col-md-4">
+                            <center>CompAcct - Accounting Solutions</center>
+                        </div>
+                        <div class="col-xs-12 col-md-4"></div>
+                    </div>
+                    <!-- End - Insert data here for company name -->
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4"></div>
+                        <div class="col-xs-12 col-md-4">
+                            <center>
+                                <h4>General Ledger</h4>
+                            </center>
+                        </div>
+                        <div class="col-xs-12 col-md-4"></div>
+                    </div>
+
+                    <!-- Start - Insert data here for date covered -->
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4"></div>
+                        <div class="col-xs-12 col-md-4">
+                            <center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+                        </div>
+                        <div class="col-xs-12 col-md-4"></div>
+                    </div>
+                    <!-- End - Insert data here for date covered -->
+
+                    <br><br>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-2"></div>
+                        <div class="col-xs-12 col-md-8">
+                            <table class="table-report table-hover">
+                                <tr class="table-report-tr-title-border">
+                                    <th>ACOUNT</th>
+                                    <th class="alignRight">DEBIT</th>
+                                    <th class="alignRight">CREDIT</th>
+                                    <th class="alignRight">BALANCE</th>
+                                </tr>
+
+
+                                <tr ng-repeat="journal in journals">
+                                    <td>
+                                        {{journal.acct_name}}
+                                    </td>
+                                    <td class="alignRight">{{journal.entry_debit | currency : '' : '2'}}</td>
+                                    <td class="alignRight">{{journal.entry_credit | currency : '' : '2'}}</td>
+                                    <td class="alignRight">{{getBalance(journal.entry_debit, journal.entry_credit)}}</td>
+
+                                </tr>
+
+
+                            </table>
+
+                            <!--<p>{{aggregatedObject | json}}</p>-->
+                        </div>
+                        <div class="col-xs-12 col-md-2"></div>
+                    </div>
+                    <!-- End - Insert data here for all accounts <-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->

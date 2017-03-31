@@ -1,0 +1,329 @@
+<div class="panelReport">
+
+	<div class="row headerReport hidden-print">
+        <div data-ng-include="'app/common/report-header.html'"></div>
+    </div>
+
+    <div class="hidden-print"></div>
+	
+	<div class="contentReport">
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4"><center>CompAcct - Accounting Solutions</center></div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4"><center><h4>Profit and Loss</h4></center></div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-4"></div>
+			<div class="col-xs-12 col-md-4">
+				<center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+			</div>
+			<div class="col-xs-12 col-md-4"></div>
+		</div>
+
+		<br><br>
+		<div class="row">
+			<div class="col-xs-12 col-md-2"></div>
+			<div class="col-xs-12 col-md-8">
+				<table class="table-report table-hover">
+					<tr class="table-report-tr-title-border">
+						<th>ACOUNT</th>
+						<th class="alignRight">Total</th> 
+					</tr>
+					<!--First Set-->
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Operating Income</td>
+						<td></td>
+					</tr>
+					<tr ng-repeat="plIncome in profitLossIncome">
+						<td>{{plIncome.acct_name}}</td>
+						<td class="alignRight">{{plIncome.entry_credit | currency : '' : '2'}}</td>
+					</tr>
+					<tr class="table-report-tr-title-border-inside">
+						<td><b>Total Operating Income</b></td>
+						<td class="alignRight">{{incomeSum * -1 | currency : '' : '2'}}</td> <!-- Multiply by -1 to get positive amount -->
+					</tr>
+					<!--End - First Set-->
+
+					<!--Second Set-->
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Cost of Goods Sold</td>
+						<td></td>
+					</tr>
+					<tr ng-repeat="plCostOfGoodsSold in profitLossCostOfGoodsSold">
+						<td>{{plCostOfGoodsSold.acct_name}}</td>
+						<td class="alignRight">{{plCostOfGoodsSold.entry_debit | currency : '' : '2' }}</td>
+					</tr>
+					<tr class="table-report-tr-title-border-inside">
+						<td><b>Total Cost of Goods Sold</b></td>
+						<td class="alignRight">{{costofgoodssoldSum | currency : '' : '2'}}</td>
+					</tr>
+					<!--End - Second Set-->
+					<!--Gross Profit-->
+					<tr>
+						<td class="alignRight"><b>Gross Profit</b></td>
+						<td class="alignRight underline">{{(incomeSum * -1) - costofgoodssoldSum | currency : '' : '2' }}</td>
+					</tr>
+					<!--End - Gross Profit-->
+
+					<!--Third Set-->
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Operating Expense</td>
+						<td></td>
+					</tr>
+					<tr ng-repeat="plExpense in profitLossExpense">
+						<td>{{plExpense.acct_name}}</td>
+						<td class="alignRight">{{plExpense.entry_debit | currency : '' : '2'}}</td>
+					</tr>
+					<tr class="table-report-tr-title-border-inside">
+						<td><b>Total Operating Expense</b></td>
+						<td class="alignRight">{{expenseSum | currency : '' : '2'}}</td>
+					</tr>
+					<!--End - Third Set-->
+
+					<!--Operating Profit-->
+					<tr>
+						<td class="alignRight"><b>Operating Profit</b></td>
+						<td class="alignRight underline">{{(incomeSum * -1) - expenseSum | currency : '' : '2' }}</td>
+					</tr>
+					<!--End - Operating Profit-->
+					
+					<!--Fourth Set-->
+					<tr>
+						<td>&nbsp;</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Non-Operating Expense (Income/Expense)</td>
+						<td></td>
+					</tr>
+					
+					<!-- Review this part (
+						if( acct_type_id == Other Expense){
+							amount is positive
+						}
+						if( acct_type_id == Other Income){
+							amount is negative
+						}
+
+					) -->
+
+					<tr ng-repeat="plOtherExpense in profitLossOtherExpense">
+						<td>{{plOtherExpense.acct_name}}</td>
+						<td class="alignRight">{{(plOtherExpense.entry_debit * -1) | currency : '' : '2'}}</td>
+					</tr>
+					<tr class="table-report-tr-title-border-inside">
+						<td><b>Total Non Operating Expense</b></td>
+						<td class="alignRight">{{(otherExpenseSum * -1) | currency : '' : '2'}}</td>
+					</tr>
+
+					<!--Net/Profit Loss-->
+					
+					<tr class="underline">
+						<td><br></td>
+						<td><br></td>
+					</tr>
+					<tr>
+						<td class="alignRight underline"><b>Net/Profit Loss</b></td>
+						<td class="alignRight underline">{{(incomeSum * -1) - costofgoodssoldSum - expenseSum - otherExpenseSum | currency : '' : '2' }}</td>
+					</tr>
+					<!--End - Net/Profit Loss-->
+				</table>
+			</div>
+			<div class="col-xs-12 col-md-2"></div>
+		</div>
+	</div>
+
+</div>
+
+
+<!--Customize Report Modal-->
+<div data-ng-include="'app/common/customize-modal.html'"></div>
+
+<!--Schedule Report MOdal-->
+<div data-ng-include="'app/common/schedule-report-modal.html'"></div>
+
+
+<!--Print Modal Pop-up	-->
+<div class="modal fade hidden-print" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content-print no-border">
+            <div class="modal-header no-border">
+                <div class="col-xs-12 col-md-6">
+                    <p>Preview</p>
+                </div>
+                <div class="col-xs-12 col-md-6 " align="right">
+                    <button type="button" class="btn btn-danger btn-modal-print " onclick="myFunction()">Print</button>
+                    <button type="button" class="btn btn-secondary btn-modal-close" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="modal-body">
+				<div class="contentReport">
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4"><center>CompAcct - Accounting Solutions</center></div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4"><center><h4>Profit and Loss</h4></center></div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-12 col-md-4"></div>
+						<div class="col-xs-12 col-md-4">
+							<center>From {{ vm.startDate | date : "dd MMM y" }} to {{ vm.endDate | date : "dd MMM y" }}</center>
+						</div>
+						<div class="col-xs-12 col-md-4"></div>
+					</div>
+
+					<br><br>
+					<div class="row">
+						<div class="col-xs-12 col-md-2"></div>
+						<div class="col-xs-12 col-md-8">
+							<table class="table-report table-hover">
+								<tr class="table-report-tr-title-border">
+									<th>ACOUNT</th>
+									<th class="alignRight">Total</th> 
+								</tr>
+								<!--First Set-->
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Operating Income</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="plIncome in profitLossIncome">
+									<td>{{plIncome.acct_name}}</td>
+									<td class="alignRight">{{plIncome.entry_credit | currency : '' : '2'}}</td>
+								</tr>
+								<tr class="table-report-tr-title-border-inside">
+									<td><b>Total Operating Income</b></td>
+									<td class="alignRight">{{incomeSum * -1 | currency : '' : '2'}}</td> <!-- Multiply by -1 to get positive amount -->
+								</tr>
+								<!--End - First Set-->
+
+								<!--Second Set-->
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Cost of Goods Sold</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="plCostOfGoodsSold in profitLossCostOfGoodsSold">
+									<td>{{plCostOfGoodsSold.acct_name}}</td>
+									<td class="alignRight">{{plCostOfGoodsSold.entry_debit | currency : '' : '2' }}</td>
+								</tr>
+								<tr class="table-report-tr-title-border-inside">
+									<td><b>Total Cost of Goods Sold</b></td>
+									<td class="alignRight">{{costofgoodssoldSum | currency : '' : '2'}}</td>
+								</tr>
+								<!--End - Second Set-->
+								<!--Gross Profit-->
+								<tr>
+									<td class="alignRight"><b>Gross Profit</b></td>
+									<td class="alignRight underline">{{(incomeSum * -1) - costofgoodssoldSum | currency : '' : '2' }}</td>
+								</tr>
+								<!--End - Gross Profit-->
+
+								<!--Third Set-->
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Operating Expense</td>
+									<td></td>
+								</tr>
+								<tr ng-repeat="plExpense in profitLossExpense">
+									<td>{{plExpense.acct_name}}</td>
+									<td class="alignRight">{{plExpense.entry_debit | currency : '' : '2'}}</td>
+								</tr>
+								<tr class="table-report-tr-title-border-inside">
+									<td><b>Total Operating Expense</b></td>
+									<td class="alignRight">{{expenseSum | currency : '' : '2'}}</td>
+								</tr>
+								<!--End - Third Set-->
+
+								<!--Operating Profit-->
+								<tr>
+									<td class="alignRight"><b>Operating Profit</b></td>
+									<td class="alignRight underline">{{(incomeSum * -1) - expenseSum | currency : '' : '2' }}</td>
+								</tr>
+								<!--End - Operating Profit-->
+								
+								<!--Fourth Set-->
+								<tr>
+									<td>&nbsp;</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Non-Operating Expense (Income/Expense)</td>
+									<td></td>
+								</tr>
+								
+								<!-- Review this part (
+									if( acct_type_id == Other Expense){
+										amount is positive
+									}
+									if( acct_type_id == Other Income){
+										amount is negative
+									}
+
+								) -->
+
+								<tr ng-repeat="plOtherExpense in profitLossOtherExpense">
+									<td>{{plOtherExpense.acct_name}}</td>
+									<td class="alignRight">{{(plOtherExpense.entry_debit * -1) | currency : '' : '2'}}</td>
+								</tr>
+								<tr class="table-report-tr-title-border-inside">
+									<td><b>Total Non Operating Expense</b></td>
+									<td class="alignRight">{{(otherExpenseSum * -1) | currency : '' : '2'}}</td>
+								</tr>
+
+								<!--Net/Profit Loss-->
+								
+								<tr class="underline">
+									<td><br></td>
+									<td><br></td>
+								</tr>
+								<tr>
+									<td class="alignRight underline"><b>Net/Profit Loss</b></td>
+									<td class="alignRight underline">{{(incomeSum * -1) - costofgoodssoldSum - expenseSum - otherExpenseSum | currency : '' : '2' }}</td>
+								</tr>
+								<!--End - Net/Profit Loss-->
+							</table>
+						</div>
+						<div class="col-xs-12 col-md-2"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Modal -->

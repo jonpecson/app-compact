@@ -1,0 +1,49 @@
+<div class="page-title">
+    <div class="title">Contacts</div>
+    <div class="sub-title">All Contacts</div>
+</div>
+
+<div class="card bg-white m-b">
+    <div class="card-header">Contacts Table
+        <!--<button type="button" class="btn pull-right" >
+            <i class="glyphicon  glyphicon-list-alt"></i> New Journal</button>
+            -->
+        <a ui-sref="app.journals.add" class="btn pull-right btn-primary btn-md btn-icon">
+            <i class="icon-plus"></i>
+            <span>New Contact</span>
+        </a>
+    </div>
+    <div class="card-block p-a-0">
+        <div class="table-responsive">
+            <table class="table m-b-0">
+                <thead>
+                    <tr>
+                        <th class="col-md-1"><b>TYPE</b></th>
+                        <th class="col-md-1"><b>NAME</b></th>
+                        <th class="col-md-2"><b>COMPANY NAME</b></th>
+                        <th class="col-md-2"><b>RECIEVABLES</b></th>
+                        <th class="col-md-1"><b>PAYABLES</b></th>
+                        <!--<th class="col-md-1">Gender</th>
+                        <th class="col-md-1">Action</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="c in vm.contacts | orderBy : '-'">
+                        <td>{{c.contact_type_desc}}</td>
+
+                        <td>{{c.contact_fname}} {{c.contact_lname}}</td>
+                        <td>{{c.contact_company_name}}</td>
+                        <td class="align-left">
+                            0 </td>
+                        <td class="align-left">
+                            0 </td>
+
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
